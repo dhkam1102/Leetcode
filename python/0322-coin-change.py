@@ -1,22 +1,24 @@
 class Solution:
     def coinChange(self, coins: List[int], amount: int, memo = None) -> int:
+        # Initialize memo only on first call
         if memo is None:
             memo = {}
-
-        if amount in memo:
-            return memo[amount]
-
-        if amount < 0:
-            return float("inf")
-        
+            # Handle the final -1 conversion at the top level
+            result = self.coinChange(coins, amount, {})
+            return -1 if result == float('inf') else result
+            
+        # Base cases
         if amount == 0:
             return 0
-
-        min_count = float("inf")
-        for i in coins:
-            count = self.coinChange(coins, amount - i, memo)
-            if count != float("inf"):  # Only add 1 if we found a valid solution
-                min_count = min(min_count, count + 1)
-
+        if amount < 0:
+            return float('inf')
+        if amount in memo:
+            return memo[amount]
+            
+        # Try each coin
+        min_count = float('inf')
+        for coin in coins:
+            min_count = min(min_count, 1 + self.coinChange(coins, amount - coin, memo))
+                
         memo[amount] = min_count
-        return min_count if min_count != float("inf") else -1
+        return min_count
