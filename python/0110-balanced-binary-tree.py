@@ -27,7 +27,7 @@ Time: O(n) since we dont have to calc the height every time
 # class TreeNode:
 #     def __init__(self, val=0, left=None, right=None):
 #         self.val = val
-#         self.left = left
+#         self.left = leftl
 #         self.right = right
 class Solution:
     def isBalanced(self, root: Optional[TreeNode]) -> bool:
